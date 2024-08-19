@@ -22,6 +22,9 @@ struct ContentView: View {
     )
     @State private var toggle3DMode = false
     @State private var placeID = ""
+    @State private var resultsAreAvaliable = false
+    @State private var searchWasSubmitted = false
+    @State private var noResultsFound = false
     
     let unitedStatesRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 105.7129, longitude: -95), // Example: San Francisco
@@ -34,7 +37,7 @@ struct ContentView: View {
 //                Marker(landmark.name, coordinate: landmark.coordinate)
 //            }
             ForEach(featureCollection, id: \.self) { feature in
-                Marker(feature.properties.name, coordinate: feature.geometry.getCoordinates)
+                Marker(feature.properties.name ?? "N/A", coordinate: feature.geometry.getCoordinates)
             }
         }
         .mapControls {
@@ -60,6 +63,8 @@ struct ContentView: View {
                             await fetchPlaceID(for: searchText, apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
                             await getPlaces(apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
                         }
+                        
+                        searchWasSubmitted = true
                     }
                     .overlay {
                         RoundedRectangle(cornerRadius: 35.0)
@@ -94,8 +99,31 @@ struct ContentView: View {
                     .focused($isFocused)
                 
                 Spacer()
+                
+                /* After the user submits their search, show a loading view until the results data is decoded and ready to go.
+                   If the data does not exist, show another view and then after a period of time remove the view.
+                 */
+                
+                if searchWasSubmitted && !resultsAreAvaliable {
+                    LoadingResultsIndicatorView()
+                        .frame(maxHeight: .infinity, alignment: .center)
+                    
+                    Spacer()
+                        .frame(height: 60)
+                } else if noResultsFound {
+                    NoResultsFoundView()
+                        .frame(maxHeight: .infinity, alignment: .center)
+                        .onAppear {
+                            removeNoResultsFoundView()
+                        }
+                    
+                    Spacer()
+                        .frame(height: 60)
+                }
+                
             }
         }
+        .previewInterfaceOrientation(.portrait)
         .preferredColorScheme(.light)
         .onAppear {
             CLLocationManager().requestWhenInUseAuthorization()
@@ -127,13 +155,8 @@ struct ContentView: View {
     }
     
     func returnSearchResults() async {
-        /* Whenever the user searches up a location,
-           call the function and return any results if avaliable.
-        */
-        
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = searchText
-        searchRequest.resultTypes = .pointOfInterest
         
         let search = MKLocalSearch(request: searchRequest)
         
@@ -144,18 +167,8 @@ struct ContentView: View {
             }
             
             if let updatedRegion = response.mapItems.first {
-                region = MKCoordinateRegion(
-                    center: updatedRegion.placemark.coordinate,
-                    span: MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)
-                )
+                mapCameraPosition = .region(MKCoordinateRegion(center: updatedRegion.placemark.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)))
             }
-            
-            if !landmarks.isEmpty {
-                for landmark in landmarks {
-                    print(landmark.name)
-                }
-            }
-            
         } catch {
             print(error.localizedDescription)
         }
@@ -187,14 +200,18 @@ struct ContentView: View {
     
     func getPlaces(apiKey: String) async {
         
-        // Limit query to 10 searchs
+        // Limit query to 20 searchs
         
-        let placesString = "https://api.geoapify.com/v2/places?categories=tourism.attraction,tourism.information&filter=place:\(placeID)&limit=10&apiKey=\(apiKey)"
+        // increase the amount of searches later on once model is more secure and failsafe.
+        
+        let placesString = "https://api.geoapify.com/v2/places?categories=tourism.attraction&filter=place:\(placeID)&limit=20&apiKey=\(apiKey)"
         
         guard let placesURL = URL(string: placesString) else { return }
         
         do {
             let (data, _) = try await URLSession.shared.data(from: placesURL)
+            
+            print(data)
             
             if let jsonString = String(data: data, encoding: .utf8) {
                 print("Raw JSON data: \(jsonString)")
@@ -202,19 +219,42 @@ struct ContentView: View {
             
             let decoder = JSONDecoder()
             
-            let response = try decoder.decode(FeatureCollection.self, from: data)
+            if let response = try? decoder.decode(FeatureCollection.self, from: data) {
+                featureCollection = response.features
+                print("Successfully decoded the data: \(response)")
+                resultsAreAvaliable = true
+                
+                if response.features == [] {
+                    noResultsFound = true
+                }
+                
+                
+            } else {
+                print("Failed to get the results.")
+                noResultsFound = true
+            }
             
-            featureCollection = response.features
+            //                if !featureCollection.isEmpty {
+            //                    resultsAreAvaliable = true
+            //                } else if  {
+            //                    noResultsFound = true
+            //                }
         } catch {
             print("Error getting the places: \(error.localizedDescription)")
         }
-        
-        print("The Feature Details are: \(featureCollection)")
     }
     
     func resetSearchText() {
         searchText = ""
         featureCollection = [Feature]()
+        resultsAreAvaliable = false
+        searchWasSubmitted = false
+    }
+    
+    func removeNoResultsFoundView() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            noResultsFound = false
+        }
     }
 }
 
