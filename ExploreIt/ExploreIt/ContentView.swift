@@ -31,13 +31,31 @@ struct ContentView: View {
         span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
     )
     
+    let colorMap: [String: Color] = [
+        ".red": .red,
+        ".orange": .orange,
+        ".yellow": .yellow,
+        ".green" : .green,
+        ".teal": .teal,
+        ".cyan": .cyan,
+        ".blue": .blue,
+        ".indigo": .indigo,
+        ".brown": .brown,
+        ".purple": .purple
+    ]
+    
     var body: some View {
         Map(position: $mapCameraPosition, scope: scopeForMap) {
-//            ForEach(landmarks, id: \.id) { landmark in
-//                Marker(landmark.name, coordinate: landmark.coordinate)
-//            }
             ForEach(featureCollection, id: \.self) { feature in
-                Marker(feature.properties.name ?? "N/A", coordinate: feature.geometry.getCoordinates)
+                Annotation(feature.properties.name ?? "N/A", coordinate: feature.geometry.getCoordinates, anchor: .top) {
+                    Circle()
+                        .fill(convertStringToColor(feature: feature))
+                        .frame(width: 35, height: 35)
+                        .overlay {
+                            ShowMapIconView(catagory: feature.properties.getCatagory)
+                                .font(.system(size: 15))
+                        }
+                }
             }
         }
         .mapControls {
@@ -147,6 +165,23 @@ struct ContentView: View {
         }
         
     }
+    
+    func convertStringToColor(feature: Feature) -> Color {
+        let colorString = feature.properties.getCategoryColor
+        
+        print("Color is: \(colorString)")
+        
+        if let color = colorMap[colorString] {
+            return color
+        }
+        return Color.white
+       
+    }
+    
+//    func getIcons(feature: Feature) -> String {
+//        let iconString = feature.properties.getIcon
+//        return iconString
+//    }
     
     func setInitialUserRegion() {
         if CLLocationManager.locationServicesEnabled() {
