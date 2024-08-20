@@ -10,28 +10,13 @@ import SwiftUI
 
 
 struct ContentView: View {
-    @Namespace var scopeForMap
     @FocusState var isFocused: Bool
-    
-    @State private var mapCameraPosition: MapCameraPosition = .automatic
-    @State private var searchText = ""
-    @State private var landmarks = [Landmark]()
-    @State private var featureCollection = [Feature]()
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 50, longitude: 50), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
     )
     @State private var toggle3DMode = false
-    @State private var placeID = ""
-    @State private var resultsAreAvaliable = false
-    @State private var searchWasSubmitted = false
-    @State private var noResultsFound = false
-    @State private var currentAttraction: Feature? = nil
     @State private var showAttactionSheet = false
-    
-    let unitedStatesRegion = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 105.7129, longitude: -95), // Example: San Francisco
-        span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
-    )
+    @State private var viewModel = ViewModel()
     
     let colorMap: [String: Color] = [
         ".red": .red,
@@ -47,8 +32,8 @@ struct ContentView: View {
     ]
     
     var body: some View {
-        Map(position: $mapCameraPosition, scope: scopeForMap) {
-            ForEach(featureCollection, id: \.self) { feature in
+        Map(position: $viewModel.mapCameraPosition) {
+            ForEach(viewModel.featureCollection, id: \.self) { feature in
                 Annotation(feature.properties.name ?? "N/A", coordinate: feature.geometry.getCoordinates, anchor: .top) {
                     Circle()
                         .fill(convertStringToColor(feature: feature))
@@ -74,10 +59,10 @@ struct ContentView: View {
                         )
                         .onTapGesture {
                             print("Touched Annotation!")
-                            currentAttraction = feature
+                            viewModel.currentAttraction = feature
                             showAttactionSheet.toggle()
                         }
-                        .sheet(item: $currentAttraction) { attraction in
+                        .sheet(item: $viewModel.currentAttraction) { attraction in
                             ShowAttractionDetailsView(attraction: attraction)
                                 .presentationDetents([.height(600)])
                                 .presentationCornerRadius(25.0)
@@ -95,7 +80,7 @@ struct ContentView: View {
                 Spacer()
                     .frame(height: 45)
                 
-                TextField("", text: $searchText, prompt: Text("Enter City, State/Country"))
+                TextField("", text: $viewModel.searchText, prompt: Text("Enter City, State/Country"))
                     .frame(width: 200, alignment: .center)
                     .tint(.black)
                     .background (
@@ -105,12 +90,15 @@ struct ContentView: View {
                     )
                     .onSubmit {
                         Task {
-                            await returnSearchResults()
-                            await fetchPlaceID(for: searchText, apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
-                            await getPlaces(apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
+                            
+                            // API key is for owners use only.
+                            
+                            await viewModel.returnSearchResults()
+                            await viewModel.fetchPlaceID(for: viewModel.searchText, apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
+                            await viewModel.getPlaces(apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
                         }
                         
-                        searchWasSubmitted = true
+                        viewModel.searchWasSubmitted = true
                     }
                     .overlay {
                         RoundedRectangle(cornerRadius: 35.0)
@@ -123,7 +111,7 @@ struct ContentView: View {
                             .foregroundStyle(.black)
                             .padding(.horizontal, 13)
                         
-                        if !searchText.isEmpty {
+                        if !viewModel.searchText.isEmpty {
                             Image(systemName: "xmark")
                                 .resizable()
                                 .frame(width: 8, height: 8)
@@ -138,7 +126,7 @@ struct ContentView: View {
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                                 .padding(.horizontal, 15)
                                 .onTapGesture {
-                                    resetSearchText()
+                                    viewModel.resetSearchText()
                                 }
                         }
                     }
@@ -150,17 +138,17 @@ struct ContentView: View {
                    If the data does not exist, show another view and then after a period of time remove the view.
                  */
                 
-                if searchWasSubmitted && !resultsAreAvaliable {
+                if viewModel.searchWasSubmitted && !viewModel.resultsAreAvaliable {
                     LoadingResultsIndicatorView()
                         .frame(maxHeight: .infinity, alignment: .center)
                     
                     Spacer()
                         .frame(height: 60)
-                } else if noResultsFound {
+                } else if viewModel.noResultsFound {
                     NoResultsFoundView()
                         .frame(maxHeight: .infinity, alignment: .center)
                         .onAppear {
-                            removeNoResultsFoundView()
+                            viewModel.removeNoResultsFoundView()
                         }
                     
                     Spacer()
@@ -175,17 +163,17 @@ struct ContentView: View {
             CLLocationManager().requestWhenInUseAuthorization()
             
             DispatchQueue.global().async { // sets the inital user region off of the main thread
-                setInitialUserRegion()
+                viewModel.setInitialUserRegion()
             }
         }
-        .onChange(of: searchText) {
+        .onChange(of: viewModel.searchText) {
             
-            if searchText == "" {
-                mapCameraPosition = .userLocation(fallback: .region(unitedStatesRegion))
-                landmarks = [Landmark]()
+            if viewModel.searchText == "" {
+                viewModel.mapCameraPosition = .userLocation(fallback: .region(viewModel.unitedStatesRegion))
+                viewModel.landmarks = [Landmark]()
                 
             } else {
-                mapCameraPosition = .automatic
+                viewModel.mapCameraPosition = .automatic
             }
         }
         .onTapGesture {
@@ -203,121 +191,7 @@ struct ContentView: View {
             return color
         }
         return Color.white
-       
-    }
-    
-//    func getIcons(feature: Feature) -> String {
-//        let iconString = feature.properties.getIcon
-//        return iconString
-//    }
-    
-    func setInitialUserRegion() {
-        if CLLocationManager.locationServicesEnabled() {
-            mapCameraPosition = .userLocation(fallback: .region(unitedStatesRegion))
-        }
-    }
-    
-    func returnSearchResults() async {
-        let searchRequest = MKLocalSearch.Request()
-        searchRequest.naturalLanguageQuery = searchText
         
-        let search = MKLocalSearch(request: searchRequest)
-        
-        do {
-            let response = try await search.start()
-            landmarks = response.mapItems.map { mapItem in
-                Landmark(placement: mapItem.placemark)
-            }
-            
-            if let updatedRegion = response.mapItems.first {
-                mapCameraPosition = .region(MKCoordinateRegion(center: updatedRegion.placemark.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)))
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-    
-    func fetchPlaceID(for location: String, apiKey: String) async {
-        let encodedLocation = location.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let urlString = "https://api.geoapify.com/v1/geocode/search?text=\(encodedLocation)&apiKey=\(apiKey)"
-        guard let url = URL(string: urlString) else { return }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-//            if let jsonString = String(data: data, encoding: .utf8) {
-//                print("Raw JSON data: \(jsonString)")
-//            }
-//            
-//            print(data)
-            
-            let response = try JSONDecoder().decode(GeocodingResponse.self, from: data)
-            
-            placeID = response.features.first?.properties.place_id ?? ""
-            
-            print("Place ID is: \(placeID)")
-        } catch {
-            print(error.localizedDescription)
-        }
-    }
-    
-    func getPlaces(apiKey: String) async {
-        
-        // Limit query to 20 searchs
-        
-        // increase the amount of searches later on once model is more secure and failsafe.
-        
-        let placesString = "https://api.geoapify.com/v2/places?categories=tourism.attraction&filter=place:\(placeID)&limit=20&apiKey=\(apiKey)"
-        
-        guard let placesURL = URL(string: placesString) else { return }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: placesURL)
-            
-            print(data)
-            
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("Raw JSON data: \(jsonString)")
-            }
-            
-            let decoder = JSONDecoder()
-            
-            if let response = try? decoder.decode(FeatureCollection.self, from: data) {
-                featureCollection = response.features
-                print("Successfully decoded the data: \(response)")
-                resultsAreAvaliable = true
-                
-                if response.features == [] {
-                    noResultsFound = true
-                }
-                
-                
-            } else {
-                print("Failed to get the results.")
-                noResultsFound = true
-            }
-            
-            //                if !featureCollection.isEmpty {
-            //                    resultsAreAvaliable = true
-            //                } else if  {
-            //                    noResultsFound = true
-            //                }
-        } catch {
-            print("Error getting the places: \(error.localizedDescription)")
-        }
-    }
-    
-    func resetSearchText() {
-        searchText = ""
-        featureCollection = [Feature]()
-        resultsAreAvaliable = false
-        searchWasSubmitted = false
-    }
-    
-    func removeNoResultsFoundView() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            noResultsFound = false
-        }
     }
 }
 
