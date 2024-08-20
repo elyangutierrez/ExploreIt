@@ -108,7 +108,7 @@ struct ShowMapIconView: View {
         case "adult":
             return Text("🍺")
         default:
-            return Text("")
+            return Text("📍")
         }
     }
 }

@@ -25,6 +25,8 @@ struct ContentView: View {
     @State private var resultsAreAvaliable = false
     @State private var searchWasSubmitted = false
     @State private var noResultsFound = false
+    @State private var currentAttraction: Feature? = nil
+    @State private var showAttactionSheet = false
     
     let unitedStatesRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 105.7129, longitude: -95), // Example: San Francisco
@@ -50,11 +52,37 @@ struct ContentView: View {
                 Annotation(feature.properties.name ?? "N/A", coordinate: feature.geometry.getCoordinates, anchor: .top) {
                     Circle()
                         .fill(convertStringToColor(feature: feature))
-                        .frame(width: 35, height: 35)
+                        .frame(width: 30, height: 30)
                         .overlay {
                             ShowMapIconView(catagory: feature.properties.getCatagory)
-                                .font(.system(size: 15))
+                                .font(.system(size: 16))
                         }
+                        .background(
+                            Circle()
+                                .fill(convertStringToColor(feature: feature).opacity(0.60))
+                                .frame(width: 35, height: 35)
+                                .background(
+                                    Circle()
+                                        .fill(convertStringToColor(feature: feature).opacity(0.40))
+                                        .frame(width: 40, height: 40)
+                                        .background(
+                                            Circle()
+                                                .fill(convertStringToColor(feature: feature).opacity(0.20))
+                                                .frame(width: 45, height: 45)
+                                        )
+                                )
+                        )
+                        .onTapGesture {
+                            print("Touched Annotation!")
+                            currentAttraction = feature
+                            showAttactionSheet.toggle()
+                        }
+                        .sheet(item: $currentAttraction) { attraction in
+                            ShowAttractionDetailsView(attraction: attraction)
+                                .presentationDetents([.height(600)])
+                                .presentationCornerRadius(25.0)
+                        }
+                        // This sheet method is causing my app to not build.
                 }
             }
         }

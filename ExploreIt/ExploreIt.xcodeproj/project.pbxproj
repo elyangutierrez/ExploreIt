@@ -17,6 +17,7 @@
 		721A3A762C72ABD8002A1B8D /* LoadingResultsIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A752C72ABD8002A1B8D /* LoadingResultsIndicatorView.swift */; };
 		721A3A782C72B587002A1B8D /* NoResultsFoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A772C72B587002A1B8D /* NoResultsFoundView.swift */; };
 		721A3A7A2C731F25002A1B8D /* ShowMapIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A792C731F25002A1B8D /* ShowMapIconView.swift */; };
+		721A3A7C2C740CE2002A1B8D /* ShowAttractionDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A7B2C740CE2002A1B8D /* ShowAttractionDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		721A3A752C72ABD8002A1B8D /* LoadingResultsIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingResultsIndicatorView.swift; sourceTree = "<group>"; };
 		721A3A772C72B587002A1B8D /* NoResultsFoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultsFoundView.swift; sourceTree = "<group>"; };
 		721A3A792C731F25002A1B8D /* ShowMapIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMapIconView.swift; sourceTree = "<group>"; };
+		721A3A7B2C740CE2002A1B8D /* ShowAttractionDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAttractionDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				721A3A752C72ABD8002A1B8D /* LoadingResultsIndicatorView.swift */,
 				721A3A772C72B587002A1B8D /* NoResultsFoundView.swift */,
 				721A3A792C731F25002A1B8D /* ShowMapIconView.swift */,
+				721A3A7B2C740CE2002A1B8D /* ShowAttractionDetailsView.swift */,
 				7212AA222C703FEE00C45166 /* Assets.xcassets */,
 				7212AA242C703FEE00C45166 /* Preview Content */,
 			);
@@ -163,6 +166,7 @@
 				7212AA212C703FEC00C45166 /* ContentView.swift in Sources */,
 				7212AA1F2C703FEC00C45166 /* ExploreItApp.swift in Sources */,
 				7212AA2D2C704B3100C45166 /* Landmark.swift in Sources */,
+				721A3A7C2C740CE2002A1B8D /* ShowAttractionDetailsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

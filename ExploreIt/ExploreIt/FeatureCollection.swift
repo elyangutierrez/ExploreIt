@@ -19,7 +19,8 @@ struct FeatureCollection: Codable {
     }
 }
 
-struct Feature: Codable, Hashable {
+struct Feature: Codable, Hashable, Identifiable {
+    let id = UUID()
     let type: String
     let properties: Properties
     let geometry: Geometry
@@ -158,7 +159,7 @@ struct Properties: Codable, Hashable  {
         case ColorAssociatedWithMarker.adult.rawValue:
             return ".brown"
         default:
-            return ""
+            return ".white"
         }
     }
     
