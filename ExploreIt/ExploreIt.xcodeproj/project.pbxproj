@@ -19,6 +19,8 @@
 		721A3A7A2C731F25002A1B8D /* ShowMapIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A792C731F25002A1B8D /* ShowMapIconView.swift */; };
 		721A3A7C2C740CE2002A1B8D /* ShowAttractionDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A7B2C740CE2002A1B8D /* ShowAttractionDetailsView.swift */; };
 		721A3A802C75303A002A1B8D /* ContentView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A7F2C75303A002A1B8D /* ContentView-ViewModel.swift */; };
+		721A3A822C756466002A1B8D /* CityAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A812C756466002A1B8D /* CityAutocomplete.swift */; };
+		721A3A842C757BF2002A1B8D /* AutoCompletionsResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A832C757BF2002A1B8D /* AutoCompletionsResultsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,8 @@
 		721A3A792C731F25002A1B8D /* ShowMapIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMapIconView.swift; sourceTree = "<group>"; };
 		721A3A7B2C740CE2002A1B8D /* ShowAttractionDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAttractionDetailsView.swift; sourceTree = "<group>"; };
 		721A3A7F2C75303A002A1B8D /* ContentView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView-ViewModel.swift"; sourceTree = "<group>"; };
+		721A3A812C756466002A1B8D /* CityAutocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityAutocomplete.swift; sourceTree = "<group>"; };
+		721A3A832C757BF2002A1B8D /* AutoCompletionsResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompletionsResultsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +95,7 @@
 				7212AA2C2C704B3100C45166 /* Landmark.swift */,
 				7212AA3F2C717B4200C45166 /* GeocodingResponse.swift */,
 				7212AA412C71802D00C45166 /* FeatureCollection.swift */,
+				721A3A812C756466002A1B8D /* CityAutocomplete.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -99,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				721A3A752C72ABD8002A1B8D /* LoadingResultsIndicatorView.swift */,
+				721A3A832C757BF2002A1B8D /* AutoCompletionsResultsView.swift */,
 				721A3A7F2C75303A002A1B8D /* ContentView-ViewModel.swift */,
 				721A3A772C72B587002A1B8D /* NoResultsFoundView.swift */,
 				721A3A792C731F25002A1B8D /* ShowMapIconView.swift */,
@@ -177,6 +183,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				721A3A842C757BF2002A1B8D /* AutoCompletionsResultsView.swift in Sources */,
 				7212AA402C717B4200C45166 /* GeocodingResponse.swift in Sources */,
 				7212AA422C71802D00C45166 /* FeatureCollection.swift in Sources */,
 				721A3A782C72B587002A1B8D /* NoResultsFoundView.swift in Sources */,
@@ -184,6 +191,7 @@
 				721A3A762C72ABD8002A1B8D /* LoadingResultsIndicatorView.swift in Sources */,
 				7212AA212C703FEC00C45166 /* ContentView.swift in Sources */,
 				7212AA1F2C703FEC00C45166 /* ExploreItApp.swift in Sources */,
+				721A3A822C756466002A1B8D /* CityAutocomplete.swift in Sources */,
 				721A3A802C75303A002A1B8D /* ContentView-ViewModel.swift in Sources */,
 				7212AA2D2C704B3100C45166 /* Landmark.swift in Sources */,
 				721A3A7C2C740CE2002A1B8D /* ShowAttractionDetailsView.swift in Sources */,

@@ -21,10 +21,13 @@ struct ShowAttractionDetailsView: View {
             Text("Attraction Info")
                 .font(.title.bold())
             
+            Spacer()
+                .frame(height: 15)
+            
             HStack {
                 Text("Area:")
-                Rectangle()
-                    .frame(width: 360, height: 2)
+                    .font(.title3)
+                    .fontWeight(.medium)
             }
             
             Text("City: \(attraction.properties.city ?? "N/A")")
@@ -33,23 +36,34 @@ struct ShowAttractionDetailsView: View {
             Text("Country: \(attraction.properties.country ?? "N/A")")
             Text("Postal Code: \(attraction.properties.postcode ?? "N/A")")
             
+            Spacer()
+                .frame(height: 15)
+            
+            Rectangle()
+                .frame(maxWidth: .infinity, maxHeight: 2, alignment: .center)
+                .foregroundStyle(.gray)
+            
+            Spacer()
+                .frame(height: 15)
+            
             HStack {
-                Text("Address")
-                Rectangle()
-                    .frame(width: 335, height: 2)
+                Text("Address:")
+                    .font(.title3)
+                    .fontWeight(.medium)
             }
             
             Text("Address 1: \(attraction.properties.addressLine1 ?? "N/A")")
             Text("Address 2: \(attraction.properties.addressLine2 ?? "N/A")")
             
+            Spacer()
+                .frame(height: 15)
             
-            
-            
-            
-            Text(attraction.properties.name ?? "")
+            Rectangle()
+                .frame(maxWidth: .infinity, maxHeight: 2, alignment: .center)
+                .foregroundStyle(.gray)
             
             Spacer()
-                .frame(height: 250)
+                .frame(height: 55)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, 10)

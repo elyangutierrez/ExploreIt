@@ -14,7 +14,6 @@ struct ContentView: View {
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 50, longitude: 50), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
     )
-    @State private var toggle3DMode = false
     @State private var showAttactionSheet = false
     @State private var viewModel = ViewModel()
     
@@ -64,7 +63,7 @@ struct ContentView: View {
                         }
                         .sheet(item: $viewModel.currentAttraction) { attraction in
                             ShowAttractionDetailsView(attraction: attraction)
-                                .presentationDetents([.height(600)])
+                                .presentationDetents([.height(400)])
                                 .presentationCornerRadius(25.0)
                         }
                         // This sheet method is causing my app to not build.
@@ -89,13 +88,16 @@ struct ContentView: View {
                             .frame(width: 285, height: 40)
                     )
                     .onSubmit {
+                        
                         Task {
                             
                             // API key is for owners use only.
                             
-                            await viewModel.returnSearchResults()
-                            await viewModel.fetchPlaceID(for: viewModel.searchText, apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
-                            await viewModel.getPlaces(apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
+                            /* When the user hits enter, call the autocompletion func, display results,
+                             and when they select the correct city, perform regulars operations.
+                             */
+                            
+                            await viewModel.searchAutocompletion(acAPIKEY: "363a1e1be51546fea723fe6ec44ae341")
                         }
                         
                         viewModel.searchWasSubmitted = true
@@ -138,9 +140,11 @@ struct ContentView: View {
                    If the data does not exist, show another view and then after a period of time remove the view.
                  */
                 
-                if viewModel.searchWasSubmitted && !viewModel.resultsAreAvaliable {
+                if viewModel.autoCompletionTouched && !viewModel.resultsAreAvaliable {
                     LoadingResultsIndicatorView()
                         .frame(maxHeight: .infinity, alignment: .center)
+                    
+                    // Display auto completion results here.
                     
                     Spacer()
                         .frame(height: 60)
@@ -153,6 +157,46 @@ struct ContentView: View {
                     
                     Spacer()
                         .frame(height: 60)
+                }
+                
+                if viewModel.searchWasSubmitted {
+                    
+                    Spacer()
+                        .frame(height: 5)
+                    
+                    ZStack {
+                        if viewModel.resultsAreLoaded {
+                            VStack(alignment: .leading) {
+                                Spacer()
+                                    .frame(height: 10)
+                                
+                                ForEach(viewModel.autocompletionResults, id: \.self) { item in
+                                    Text("\(item.city ?? "N/A"), \(item.state), \(item.country)")
+                                        .font(.system(size: 14))
+                                        .padding(.bottom, 15)
+                                        .onTapGesture {
+                                            viewModel.setAutocompletionText(item: item)
+
+                                            print("Touched the city item.")
+                                            
+                                            viewModel.searchWasSubmitted = false
+                                        }
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 85)
+                            .background(
+                                Color.white
+                                    .frame(width: 270)
+                                    .shadow(radius: 10)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10.0))
+                            )
+                            .padding(.vertical, 3)
+                        }
+                    }
+                    
+                    Spacer()
+                        .frame(maxHeight: .infinity, alignment: .top)
                 }
                 
             }

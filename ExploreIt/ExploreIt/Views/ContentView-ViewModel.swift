@@ -18,12 +18,17 @@ extension ContentView {
         var searchText = ""
         var landmarks = [Landmark]()
         var featureCollection = [Feature]()
+        var autocompletionResults = [CityAutocomplete]()
         var mapCameraPosition: MapCameraPosition = .automatic
         var placeID = ""
         var noResultsFound = false
         var resultsAreAvaliable = false
         var searchWasSubmitted = false
         var currentAttraction: Feature? = nil
+        var autocompletionSearchText = ""
+        var autoCompletionTouched = false
+        var resultsAreLoaded = false
+        var runQueryTask = false
         
         let unitedStatesRegion = MKCoordinateRegion(
             center: CLLocationCoordinate2D(latitude: 105.7129, longitude: -95), // Example: San Francisco
@@ -32,7 +37,9 @@ extension ContentView {
         
         func returnSearchResults() async {
             let searchRequest = MKLocalSearch.Request()
-            searchRequest.naturalLanguageQuery = searchText
+            searchRequest.naturalLanguageQuery = autocompletionSearchText
+            
+            print("Getting search results text: \(autocompletionSearchText)")
             
             let search = MKLocalSearch(request: searchRequest)
             
@@ -116,14 +123,72 @@ extension ContentView {
         
         func resetSearchText() {
             searchText = ""
+            autocompletionSearchText = ""
             featureCollection = [Feature]()
+            autocompletionResults = [CityAutocomplete]()
             resultsAreAvaliable = false
             searchWasSubmitted = false
+            resultsAreLoaded = false
+            runQueryTask = false
+            autoCompletionTouched = false
         }
         
         func removeNoResultsFoundView() {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 self.noResultsFound = false
+            }
+        }
+        
+        func searchAutocompletion(acAPIKEY: String) async {
+            let query = searchText
+            
+            guard let url = URL(string: "https://api.geoapify.com/v1/geocode/autocomplete?text=\(query)&limit=5&format=json&apiKey=\(acAPIKEY)") else {
+                return
+            }
+            
+            do {
+                
+                let (data, _) = try await URLSession.shared.data(from: url)
+                
+                print(data)
+                
+                let decorder = JSONDecoder()
+                
+                if let response = try? decorder.decode(Results.self, from: data) {
+                    autocompletionResults = response.results
+                    print(response)
+                    
+                    if autocompletionResults == [] {
+                        resultsAreLoaded = false
+                        noResultsFound = true
+                    } else {
+                        resultsAreLoaded = true
+                    }
+                    
+                } else {
+                    print("Failure decoding the response")
+                }
+                
+            } catch {
+                print("Error getting data: \(error.localizedDescription)")
+            }
+        }
+        
+        func setAutocompletionText(item: CityAutocomplete) {
+            self.autocompletionSearchText = "\(item.city ?? "N/A"), \(item.state), \(item.country)"
+            searchText = autocompletionSearchText
+            autoCompletionTouched = true
+            print(autocompletionSearchText)
+            
+            print("The value of autocompletiontouched is: \(autoCompletionTouched)")
+            
+            if autoCompletionTouched {
+                print("Running tasks!")
+                Task {
+                    await returnSearchResults()
+                    await fetchPlaceID(for: autocompletionSearchText, apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
+                    await getPlaces(apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
+                }
             }
         }
     }
