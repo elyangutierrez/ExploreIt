@@ -131,6 +131,7 @@ extension ContentView {
             resultsAreLoaded = false
             runQueryTask = false
             autoCompletionTouched = false
+            placeID = ""
         }
         
         func removeNoResultsFoundView() {
@@ -185,9 +186,14 @@ extension ContentView {
             if autoCompletionTouched {
                 print("Running tasks!")
                 Task {
-                    await returnSearchResults()
-                    await fetchPlaceID(for: autocompletionSearchText, apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
-                    await getPlaces(apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
+                    
+                    if searchText == "" {
+                        mapCameraPosition = .userLocation(fallback: .region(unitedStatesRegion))
+                    } else {
+                        await returnSearchResults()
+                        await fetchPlaceID(for: autocompletionSearchText, apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
+                        await getPlaces(apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
+                    }
                 }
             }
         }

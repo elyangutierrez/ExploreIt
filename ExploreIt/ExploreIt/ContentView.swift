@@ -105,7 +105,7 @@ struct ContentView: View {
                     .overlay {
                         RoundedRectangle(cornerRadius: 35.0)
                             .fill(.clear)
-                            .stroke(.black, lineWidth: 2)
+                            .stroke(isFocused ? .blue : .black, lineWidth: 2)
                             .frame(width: 285, height: 40, alignment: .center)
                         
                         Image(systemName: "magnifyingglass")
@@ -191,7 +191,7 @@ struct ContentView: View {
                                     .shadow(radius: 10)
                                     .clipShape(RoundedRectangle(cornerRadius: 10.0))
                             )
-                            .padding(.vertical, 3)
+                            .padding(.vertical, -3)
                         }
                     }
                     
