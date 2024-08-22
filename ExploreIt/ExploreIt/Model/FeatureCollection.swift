@@ -51,6 +51,7 @@ struct Properties: Codable, Hashable  {
     let details: [String]
     let datasource: Datasource?
     let website: String?
+    let contact: Contact?
     let ele: Int?
     let wikiAndMedia: WikiAndMedia?
     let placeID: String
@@ -65,6 +66,7 @@ struct Properties: Codable, Hashable  {
         case addressLine2 = "address_line2"
         case categories, details, datasource, wikiAndMedia = "wiki_and_media", placeID = "place_id"
         case postcode
+        case contact
     }
     
     enum AvaliableCategories: String {
@@ -288,5 +290,14 @@ struct WikiAndMedia: Codable, Hashable  {
         case wikidata
         case wikipedia
         case image
+    }
+}
+
+struct Contact: Codable, Hashable {
+    let phone: String?
+    let email: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case phone, email
     }
 }
