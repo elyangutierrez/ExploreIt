@@ -100,6 +100,7 @@ extension ContentView {
                     featureCollection = response.features
                     print("Successfully decoded the data: \(response)")
                     resultsAreAvaliable = true
+                    print(featureCollection)
                     
                     if response.features == [] {
                         noResultsFound = true

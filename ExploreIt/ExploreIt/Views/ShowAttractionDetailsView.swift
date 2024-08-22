@@ -15,58 +15,64 @@ struct ShowAttractionDetailsView: View {
     
     var body: some View {
         
+        VStack {
+            CapsuleForDetailView(categories: attraction.properties.categories)
+        }
         
         VStack(alignment: .leading) {
+            // Content details and attraction info here
             
-            Text("Attraction Info")
-                .font(.title.bold())
+            Text(attraction.properties.name ?? "N/A")
+                .font(.title2.bold())
+                .lineLimit(2)
+            
+            Rectangle()
+                .fill(.gray.opacity(0.20))
+                .frame(maxWidth: .infinity, maxHeight: 2, alignment: .center)
+            
+            Text("Location")
+                .font(.title3)
+                .fontWeight(.medium)
             
             Spacer()
-                .frame(height: 15)
-            
-            HStack {
-                Text("Area:")
-                    .font(.title3)
-                    .fontWeight(.medium)
-            }
+                .frame(height: 10)
             
             Text("City: \(attraction.properties.city ?? "N/A")")
             Text("County: \(attraction.properties.county ?? "N/A")")
             Text("State: \(attraction.properties.state ?? "N/A")")
             Text("Country: \(attraction.properties.country ?? "N/A")")
             Text("Postal Code: \(attraction.properties.postcode ?? "N/A")")
+            Text("State Code: \(attraction.properties.stateCode ?? "N/A")")
+            Text("Country Code: \(attraction.properties.countryCode ?? "N/A")")
             
             Spacer()
-                .frame(height: 15)
+                .frame(height: 10)
+            
+            Text("Address")
+                .font(.title3)
+                .fontWeight(.medium)
+            
+            Spacer()
+                .frame(height: 10)
+            
+            Text("Main Address: \(attraction.properties.addressLine1 ?? "N/A")")
+            Text("Secondary Address: \(attraction.properties.addressLine2 ?? "N/A")")
+            
+            Spacer()
+                .frame(height: 20)
             
             Rectangle()
+                .fill(.gray.opacity(0.20))
                 .frame(maxWidth: .infinity, maxHeight: 2, alignment: .center)
-                .foregroundStyle(.gray)
+            
+            // main spacer
             
             Spacer()
-                .frame(height: 15)
+                .frame(height: 10)
             
-            HStack {
-                Text("Address:")
-                    .font(.title3)
-                    .fontWeight(.medium)
-            }
-            
-            Text("Address 1: \(attraction.properties.addressLine1 ?? "N/A")")
-            Text("Address 2: \(attraction.properties.addressLine2 ?? "N/A")")
-            
-            Spacer()
-                .frame(height: 15)
-            
-            Rectangle()
-                .frame(maxWidth: .infinity, maxHeight: 2, alignment: .center)
-                .foregroundStyle(.gray)
-            
-            Spacer()
-                .frame(height: 55)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 10)
+        .padding(.horizontal, 15)
     }
 }
 

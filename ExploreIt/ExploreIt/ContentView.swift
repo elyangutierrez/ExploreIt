@@ -63,7 +63,7 @@ struct ContentView: View {
                         }
                         .sheet(item: $viewModel.currentAttraction) { attraction in
                             ShowAttractionDetailsView(attraction: attraction)
-                                .presentationDetents([.height(400)])
+                                .presentationDetents([.height(450)])
                                 .presentationCornerRadius(25.0)
                         }
                         // This sheet method is causing my app to not build.
@@ -98,6 +98,8 @@ struct ContentView: View {
                              */
                             
                             await viewModel.searchAutocompletion(acAPIKEY: "363a1e1be51546fea723fe6ec44ae341")
+                            
+                            // moved other async calls to the searchAutocompletion method
                         }
                         
                         viewModel.searchWasSubmitted = true

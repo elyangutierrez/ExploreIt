@@ -21,6 +21,7 @@
 		721A3A802C75303A002A1B8D /* ContentView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A7F2C75303A002A1B8D /* ContentView-ViewModel.swift */; };
 		721A3A822C756466002A1B8D /* CityAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A812C756466002A1B8D /* CityAutocomplete.swift */; };
 		721A3A842C757BF2002A1B8D /* AutoCompletionsResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A832C757BF2002A1B8D /* AutoCompletionsResultsView.swift */; };
+		721A3A862C770A42002A1B8D /* CapsuleForDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A852C770A42002A1B8D /* CapsuleForDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		721A3A7F2C75303A002A1B8D /* ContentView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView-ViewModel.swift"; sourceTree = "<group>"; };
 		721A3A812C756466002A1B8D /* CityAutocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityAutocomplete.swift; sourceTree = "<group>"; };
 		721A3A832C757BF2002A1B8D /* AutoCompletionsResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoCompletionsResultsView.swift; sourceTree = "<group>"; };
+		721A3A852C770A42002A1B8D /* CapsuleForDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleForDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				721A3A772C72B587002A1B8D /* NoResultsFoundView.swift */,
 				721A3A792C731F25002A1B8D /* ShowMapIconView.swift */,
 				721A3A7B2C740CE2002A1B8D /* ShowAttractionDetailsView.swift */,
+				721A3A852C770A42002A1B8D /* CapsuleForDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -184,6 +187,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				721A3A842C757BF2002A1B8D /* AutoCompletionsResultsView.swift in Sources */,
+				721A3A862C770A42002A1B8D /* CapsuleForDetailView.swift in Sources */,
 				7212AA402C717B4200C45166 /* GeocodingResponse.swift in Sources */,
 				7212AA422C71802D00C45166 /* FeatureCollection.swift in Sources */,
 				721A3A782C72B587002A1B8D /* NoResultsFoundView.swift in Sources */,
