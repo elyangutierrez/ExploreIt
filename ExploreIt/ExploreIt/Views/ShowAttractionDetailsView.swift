@@ -82,12 +82,40 @@ struct ShowAttractionDetailsView: View {
                 Spacer()
                     .frame(height: 10)
                 
-                Text("Phone Number: \(attraction.properties.contact?.phone ?? "N/A")")
-                Text("Email: \(attraction.properties.contact?.email ?? "N/A")")
+//                Text("Phone Number: \(attraction.properties.contact?.phone ?? "N/A")")
+                if let phoneNumber = attraction.properties.contact?.phone {
+                    let numberWithDashes = phoneNumber.replacingOccurrences(of: "-", with: "")
+                    HStack {
+                        Text("Phone Number:")
+                        
+                        VStack {
+                            Link(destination: URL(string: "tel:\(numberWithDashes)")!) {
+                                Text(phoneNumber)
+                            }
+                        }
+                    }
+                } else {
+                    Text("Phone Number: N/A")
+                }
+                
+                if let email = attraction.properties.contact?.email {
+                    HStack {
+                        Text("Email:")
+                        
+                        VStack {
+                            Link(destination: URL(string: "mailto:\(email)")!) {
+                                Text(email)
+                            }
+                        }
+                    }
+                } else {
+                    Text("Email: N/A")
+                }
+                
                 
                 if let website = attraction.properties.website {
                     
-                        Text("Website:")
+                    Text("Website:")
                     
                     VStack(alignment: .leading) {
                         Link(destination: URL(string: website)!) {

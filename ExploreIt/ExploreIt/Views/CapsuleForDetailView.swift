@@ -15,10 +15,16 @@ struct CapsuleForDetailView: View {
     
     var getMainCategories: [String] {
         var mainArray = [String]()
+        var itemToAppend = ""
         
         for category in categories {
-            if !category.contains(".") && !category.contains("man_made") {
-                mainArray.append(category)
+            if !category.contains(".") {
+                if category.contains("_") {
+                    itemToAppend = category.replacingOccurrences(of: "_", with: " ")
+                    mainArray.append(itemToAppend)
+                } else {
+                    mainArray.append(category)
+                }
             }
         }
         
