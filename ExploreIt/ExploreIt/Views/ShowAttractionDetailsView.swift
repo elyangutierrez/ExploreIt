@@ -30,9 +30,6 @@ struct ShowAttractionDetailsView: View {
                     .font(.title2.bold())
                     .lineLimit(2)
                 
-                //            Rectangle()
-                //                .fill(.gray.opacity(0.20))
-                //                .frame(maxWidth: .infinity, maxHeight: 2, alignment: .center)
                 
                 Divider()
                 
@@ -51,9 +48,6 @@ struct ShowAttractionDetailsView: View {
                 Text("State Code: \(attraction.properties.stateCode ?? "N/A")")
                 Text("Country Code: \(attraction.properties.countryCode ?? "N/A")")
                 
-                //            Spacer()
-                //                .frame(height: 10)
-                
                 Divider()
                 
                 Text("Address")
@@ -69,9 +63,6 @@ struct ShowAttractionDetailsView: View {
                 Spacer()
                     .frame(height: 20)
                 
-                //            Rectangle()
-                //                .fill(.gray.opacity(0.20))
-                //                .frame(maxWidth: .infinity, maxHeight: 2, alignment: .center)
                 
                 Divider()
                 
@@ -82,7 +73,6 @@ struct ShowAttractionDetailsView: View {
                 Spacer()
                     .frame(height: 10)
                 
-//                Text("Phone Number: \(attraction.properties.contact?.phone ?? "N/A")")
                 if let phoneNumber = attraction.properties.contact?.phone {
                     let numberWithDashes = phoneNumber.replacingOccurrences(of: "-", with: "")
                     HStack {

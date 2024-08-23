@@ -113,6 +113,6 @@ struct ShowMapIconView: View {
     }
 }
 
-//#Preview {
-//    ShowMapIconView()
-//}
+#Preview {
+    ShowMapIconView(catagory: "no_fee")
+}

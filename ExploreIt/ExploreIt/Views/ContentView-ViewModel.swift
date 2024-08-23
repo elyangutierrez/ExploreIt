@@ -36,6 +36,9 @@ extension ContentView {
         )
         
         func returnSearchResults() async {
+            
+            // Gets the initial position of what city you want to go to
+            
             let searchRequest = MKLocalSearch.Request()
             searchRequest.naturalLanguageQuery = autocompletionSearchText
             
@@ -58,6 +61,11 @@ extension ContentView {
         }
         
         func fetchPlaceID(for location: String, apiKey: String) async {
+            
+            /* Gets the place ID that will be used for getting the attractions
+               that are within the city
+             */
+            
             let encodedLocation = location.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             let urlString = "https://api.geoapify.com/v1/geocode/search?text=\(encodedLocation)&apiKey=\(apiKey)"
             guard let url = URL(string: urlString) else { return }
@@ -77,9 +85,9 @@ extension ContentView {
         
         func getPlaces(apiKey: String) async {
             
-            // Limit query to 20 searchs
+            // Limit query to 20 attractions
             
-            // increase the amount of searches later on once model is more secure and failsafe.
+            // Uses the place ID and gets the attractions in the given city
             
             let placesString = "https://api.geoapify.com/v2/places?categories=tourism.attraction&filter=place:\(placeID)&limit=20&apiKey=\(apiKey)"
             
@@ -117,12 +125,21 @@ extension ContentView {
         }
         
         func setInitialUserRegion() {
+            
+            /* When the user first opens the app, if they have location services allowed,
+               set the position to where they are currently at, else set in US Region.
+             */
+            
+            
             if CLLocationManager.locationServicesEnabled() {
                 mapCameraPosition = .userLocation(fallback: .region(unitedStatesRegion))
             }
         }
         
         func resetSearchText() {
+            
+            // Resets all variables that are involved in the search process
+            
             searchText = ""
             autocompletionSearchText = ""
             featureCollection = [Feature]()
@@ -136,12 +153,18 @@ extension ContentView {
         }
         
         func removeNoResultsFoundView() {
+            
+            // Remove the No Results Found view after 2 seconds
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 self.noResultsFound = false
             }
         }
         
         func searchAutocompletion(acAPIKEY: String) async {
+            
+            // Uses the query to find cities similar what the query contains. Consists of 5 options to select from.
+            
             let query = searchText
             
             guard let url = URL(string: "https://api.geoapify.com/v1/geocode/autocomplete?text=\(query)&limit=5&format=json&apiKey=\(acAPIKEY)") else {
@@ -177,6 +200,12 @@ extension ContentView {
         }
         
         func setAutocompletionText(item: CityAutocomplete) {
+            
+            /* When the user selects the autocompletion city, replace the search text with it
+               and call the other async methods
+             */
+            
+            
             self.autocompletionSearchText = "\(item.city ?? "N/A"), \(item.state), \(item.country)"
             searchText = autocompletionSearchText
             autoCompletionTouched = true

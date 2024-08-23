@@ -14,6 +14,9 @@ struct CapsuleForDetailView: View {
     var categories: [String]
     
     var getMainCategories: [String] {
+        
+        // Gets categories that are not so specific
+        
         var mainArray = [String]()
         var itemToAppend = ""
         
