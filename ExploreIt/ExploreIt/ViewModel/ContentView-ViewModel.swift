@@ -15,6 +15,7 @@ extension ContentView {
     @Observable
     class ViewModel {
         
+        var locationManager = LocationManager()
         var searchText = ""
         var landmarks = [Landmark]()
         var featureCollection = [Feature]()
@@ -29,6 +30,12 @@ extension ContentView {
         var autoCompletionTouched = false
         var resultsAreLoaded = false
         var runQueryTask = false
+        
+        var destinationsLat = 0.0
+        var destinationsLon = 0.0
+        var distanceResult = 0.0
+        var readyToCalculateDistance = false
+
         
         let unitedStatesRegion = MKCoordinateRegion(
             center: CLLocationCoordinate2D(latitude: 105.7129, longitude: -95), // Example: San Francisco
@@ -55,6 +62,21 @@ extension ContentView {
                 if let updatedRegion = response.mapItems.first {
                     mapCameraPosition = .region(MKCoordinateRegion(center: updatedRegion.placemark.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.15, longitudeDelta: 0.15)))
                 }
+                
+                if let getLatitudeOfDestination = response.mapItems.first {
+                    destinationsLat = getLatitudeOfDestination.placemark.coordinate.latitude
+                    print("Destinations Latitude: \(destinationsLat)")
+                }
+                
+                if let getLonOfDestination = response.mapItems.first {
+                    destinationsLon = getLonOfDestination.placemark.coordinate.longitude
+                    print("Destinations Longitude: \(destinationsLon)")
+                }
+                
+                distanceResult = haversineDistance(lat1: locationManager.location?.latitude ?? 0.0, lon1: locationManager.location?.longitude ?? 0.0, lat2: destinationsLat, lon2: destinationsLon)
+                
+                print("The distance is: \(distanceResult)")
+                
             } catch {
                 print(error.localizedDescription)
             }
@@ -150,6 +172,8 @@ extension ContentView {
             runQueryTask = false
             autoCompletionTouched = false
             placeID = ""
+            distanceResult = 0.0
+            readyToCalculateDistance = false
         }
         
         func removeNoResultsFoundView() {
@@ -221,11 +245,32 @@ extension ContentView {
                         mapCameraPosition = .userLocation(fallback: .region(unitedStatesRegion))
                     } else {
                         await returnSearchResults()
+                        readyToCalculateDistance = true
                         await fetchPlaceID(for: autocompletionSearchText, apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
                         await getPlaces(apiKey: "e24cb77dcb4f49c9abb36ab68d52661c")
                     }
                 }
             }
+        }
+        
+        func haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
+            
+            print(lat1, lon1, lat2, lon2)
+            // Convert degrees to radians
+            let dLat = (lat2 - lat1).degreesToRadians
+            let dLon = (lon2 - lon1).degreesToRadians
+            let originLat = lat1.degreesToRadians
+            let destinationLat = lat2.degreesToRadians
+            
+            print(dLat, dLon, originLat, destinationLat)
+            
+            // Haversine formula
+            let a = sin(dLat / 2) * sin(dLat / 2) +
+                    sin(dLon / 2) * sin(dLon / 2) * cos(originLat) * cos(destinationLat)
+            let c = 2 * atan2(sqrt(a), sqrt(1 - a))
+            
+            // Earth radius in miles
+            return 3958.8 * c
         }
     }
 }

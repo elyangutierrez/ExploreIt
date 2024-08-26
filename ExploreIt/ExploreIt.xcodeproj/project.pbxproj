@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7204D6432C7BFD2200C46AF7 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7204D6422C7BFD2200C46AF7 /* Double.swift */; };
 		7212AA1F2C703FEC00C45166 /* ExploreItApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7212AA1E2C703FEC00C45166 /* ExploreItApp.swift */; };
 		7212AA212C703FEC00C45166 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7212AA202C703FEC00C45166 /* ContentView.swift */; };
 		7212AA232C703FEE00C45166 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7212AA222C703FEE00C45166 /* Assets.xcassets */; };
@@ -21,9 +22,11 @@
 		721A3A802C75303A002A1B8D /* ContentView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A7F2C75303A002A1B8D /* ContentView-ViewModel.swift */; };
 		721A3A822C756466002A1B8D /* CityAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A812C756466002A1B8D /* CityAutocomplete.swift */; };
 		721A3A862C770A42002A1B8D /* CapsuleForDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A852C770A42002A1B8D /* CapsuleForDetailView.swift */; };
+		721A3A8A2C7BD5DB002A1B8D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A892C7BD5DB002A1B8D /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7204D6422C7BFD2200C46AF7 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		7212AA1B2C703FEC00C45166 /* ExploreIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExploreIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7212AA1E2C703FEC00C45166 /* ExploreItApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreItApp.swift; sourceTree = "<group>"; };
 		7212AA202C703FEC00C45166 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -39,6 +42,7 @@
 		721A3A7F2C75303A002A1B8D /* ContentView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentView-ViewModel.swift"; sourceTree = "<group>"; };
 		721A3A812C756466002A1B8D /* CityAutocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityAutocomplete.swift; sourceTree = "<group>"; };
 		721A3A852C770A42002A1B8D /* CapsuleForDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleForDetailView.swift; sourceTree = "<group>"; };
+		721A3A892C7BD5DB002A1B8D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +56,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7204D6412C7BFD0E00C46AF7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7204D6422C7BFD2200C46AF7 /* Double.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		7204D6482C7C0E9E00C46AF7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				721A3A7F2C75303A002A1B8D /* ContentView-ViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		7212AA122C703FEC00C45166 = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +93,8 @@
 			children = (
 				7212AA1E2C703FEC00C45166 /* ExploreItApp.swift */,
 				7212AA202C703FEC00C45166 /* ContentView.swift */,
+				7204D6482C7C0E9E00C46AF7 /* ViewModel */,
+				7204D6412C7BFD0E00C46AF7 /* Extensions */,
 				721A3A7D2C752D34002A1B8D /* Model */,
 				721A3A7E2C752D51002A1B8D /* Views */,
 				7212AA222C703FEE00C45166 /* Assets.xcassets */,
@@ -96,6 +118,7 @@
 				7212AA3F2C717B4200C45166 /* GeocodingResponse.swift */,
 				7212AA412C71802D00C45166 /* FeatureCollection.swift */,
 				721A3A812C756466002A1B8D /* CityAutocomplete.swift */,
+				721A3A892C7BD5DB002A1B8D /* LocationManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -104,7 +127,6 @@
 			isa = PBXGroup;
 			children = (
 				721A3A752C72ABD8002A1B8D /* LoadingResultsIndicatorView.swift */,
-				721A3A7F2C75303A002A1B8D /* ContentView-ViewModel.swift */,
 				721A3A772C72B587002A1B8D /* NoResultsFoundView.swift */,
 				721A3A792C731F25002A1B8D /* ShowMapIconView.swift */,
 				721A3A7B2C740CE2002A1B8D /* ShowAttractionDetailsView.swift */,
@@ -129,6 +151,8 @@
 			dependencies = (
 			);
 			name = ExploreIt;
+			packageProductDependencies = (
+			);
 			productName = ExploreIt;
 			productReference = 7212AA1B2C703FEC00C45166 /* ExploreIt.app */;
 			productType = "com.apple.product-type.application";
@@ -157,6 +181,9 @@
 				Base,
 			);
 			mainGroup = 7212AA122C703FEC00C45166;
+			packageReferences = (
+				721A3A8B2C7BF6B1002A1B8D /* XCRemoteSwiftPackageReference "HaversineDistance" */,
+			);
 			productRefGroup = 7212AA1C2C703FEC00C45166 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -189,12 +216,14 @@
 				721A3A782C72B587002A1B8D /* NoResultsFoundView.swift in Sources */,
 				721A3A7A2C731F25002A1B8D /* ShowMapIconView.swift in Sources */,
 				721A3A762C72ABD8002A1B8D /* LoadingResultsIndicatorView.swift in Sources */,
+				7204D6432C7BFD2200C46AF7 /* Double.swift in Sources */,
 				7212AA212C703FEC00C45166 /* ContentView.swift in Sources */,
 				7212AA1F2C703FEC00C45166 /* ExploreItApp.swift in Sources */,
 				721A3A822C756466002A1B8D /* CityAutocomplete.swift in Sources */,
 				721A3A802C75303A002A1B8D /* ContentView-ViewModel.swift in Sources */,
 				7212AA2D2C704B3100C45166 /* Landmark.swift in Sources */,
 				721A3A7C2C740CE2002A1B8D /* ShowAttractionDetailsView.swift in Sources */,
+				721A3A8A2C7BD5DB002A1B8D /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +431,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		721A3A8B2C7BF6B1002A1B8D /* XCRemoteSwiftPackageReference "HaversineDistance" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tmn/HaversineDistance";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 7212AA132C703FEC00C45166 /* Project object */;
 }

@@ -1,0 +1,15 @@
+{
+  "originHash" : "29f0645b0008025e626d2a70a78e68eab8ba57c2eb2a88d1998995a10b8877c2",
+  "pins" : [
+    {
+      "identity" : "haversinedistance",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tmn/HaversineDistance",
+      "state" : {
+        "revision" : "03825671d6dde145c96e30b5c2cc5a51a991817e",
+        "version" : "2.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}

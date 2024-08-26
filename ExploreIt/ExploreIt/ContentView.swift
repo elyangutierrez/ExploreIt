@@ -66,7 +66,6 @@ struct ContentView: View {
                                 .presentationDetents([.height(450)])
                                 .presentationCornerRadius(25.0)
                         }
-                        // This sheet method is causing my app to not build.
                 }
             }
         }
@@ -100,6 +99,7 @@ struct ContentView: View {
                             await viewModel.searchAutocompletion(acAPIKEY: "363a1e1be51546fea723fe6ec44ae341")
                             
                             // moved other async calls to the searchAutocompletion method
+                            
                         }
                         
                         viewModel.searchWasSubmitted = true
@@ -133,10 +133,12 @@ struct ContentView: View {
                                     viewModel.resetSearchText()
                                 }
                         }
+                    
                     }
                     .focused($isFocused)
                 
                 Spacer()
+                
                 
                 /* After the user submits their search, show a loading view until the results data is decoded and ready to go.
                    If the data does not exist, show another view and then after a period of time remove the view.
@@ -149,7 +151,7 @@ struct ContentView: View {
                     // Display auto completion results here.
                     
                     Spacer()
-                        .frame(height: 60)
+                        .frame(height: 30)
                 } else if viewModel.noResultsFound {
                     NoResultsFoundView()
                         .frame(maxHeight: .infinity, alignment: .center)
@@ -201,15 +203,45 @@ struct ContentView: View {
                         .frame(maxHeight: .infinity, alignment: .top)
                 }
                 
+                if viewModel.resultsAreAvaliable {
+                    VStack {
+                        Text(viewModel.distanceResult.convertDistanceToString + " mi")
+                            .background(
+                                RoundedRectangle(cornerRadius: 15.0)
+                                    .fill(.white)
+                                    .stroke(.black, lineWidth: 1)
+                                    .padding(.horizontal, -5)
+                                    .padding(.vertical, -5)
+                            )
+                    }
+                    .frame(maxWidth: .infinity, alignment: .bottomLeading)
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 35)
+                }
+                
             }
         }
         .previewInterfaceOrientation(.portrait)
         .preferredColorScheme(.light)
         .onAppear {
-            CLLocationManager().requestWhenInUseAuthorization()
+            viewModel.locationManager.requestPermissionToGetUserLocation()
+            viewModel.locationManager.checkIfLocationServicesAreInUse()
             
-            DispatchQueue.global().async { // sets the inital user region off of the main thread
-                viewModel.setInitialUserRegion()
+            if viewModel.locationManager.locationServicesInUse == true {
+                if let coordinate = viewModel.locationManager.location {
+                    print("Latitude is: \(coordinate.latitude)")
+                    print("Longitude is: \(coordinate.longitude)")
+                    
+                } else {
+                    print("No location.")
+                }
+                
+                DispatchQueue.global().async { // sets the inital user region off of the main thread
+                    viewModel.setInitialUserRegion()
+                }
+                
+            } else {
+                print("No")
             }
         }
         .onChange(of: viewModel.searchText) {
