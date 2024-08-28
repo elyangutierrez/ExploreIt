@@ -30,19 +30,23 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     
     func checkIfLocationServicesAreInUse() {
         
-        // fix the warning later...
+        // Move operations off of the main queue
         
-        if CLLocationManager.locationServicesEnabled() {
-            switch manager.authorizationStatus {
-            case .notDetermined, .restricted, .denied:
-                locationServicesInUse = false // set to false if location services are not being used
-                print("Location Services are not being used.")
-            case .authorizedAlways, .authorizedWhenInUse:
-                locationServicesInUse = true // set to true if location services are being used
-                print("Location Services are being used.")
-                location = manager.location?.coordinate
-            @unknown default:
-                fatalError() // call when a error or unknown situation occurs
+        let locationServicesSwitch = DispatchQueue(label: "locationServicesSwitch")
+        
+        locationServicesSwitch.async { [self] in
+            if CLLocationManager.locationServicesEnabled() {
+                switch manager.authorizationStatus {
+                case .notDetermined, .restricted, .denied:
+                    locationServicesInUse = false // set to false if location services are not being used
+                    print("Location Services are not being used.")
+                case .authorizedAlways, .authorizedWhenInUse:
+                    locationServicesInUse = true // set to true if location services are being used
+                    print("Location Services are being used.")
+                    location = manager.location?.coordinate
+                @unknown default:
+                    fatalError() // call when a error or unknown situation occurs
+                }
             }
         }
     }

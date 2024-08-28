@@ -78,7 +78,7 @@ struct ContentView: View {
                 Spacer()
                     .frame(height: 45)
                 
-                TextField("", text: $viewModel.searchText, prompt: Text("Enter City, State/Country"))
+                TextField("", text: $viewModel.searchText, prompt: Text("Enter Destination"))
                     .frame(width: 200, alignment: .center)
                     .tint(.black)
                     .background (
