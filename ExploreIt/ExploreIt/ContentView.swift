@@ -8,7 +8,6 @@
 import MapKit
 import SwiftUI
 
-
 struct ContentView: View {
     @FocusState var isFocused: Bool
     @State private var region = MKCoordinateRegion(
@@ -88,9 +87,14 @@ struct ContentView: View {
                     )
                     .onSubmit {
                         
+                        print("Search text: \(viewModel.searchText)")
+                        
+                        viewModel.checkSearchText(searchText: viewModel.searchText)
+                        
                         Task {
                             
-                            // API key is for owners use only.
+                            /* API key is for owners use only. Plesae create your own
+                               if you want to expand further using geoapify.com */
                             
                             /* When the user hits enter, call the autocompletion func, display results,
                              and when they select the correct city, perform regulars operations.
@@ -204,10 +208,11 @@ struct ContentView: View {
                 }
                 
                 if viewModel.resultsAreAvaliable {
+                    
                     VStack {
-                        Text(viewModel.distanceResult.convertDistanceToString + " mi")
+                        Text(viewModel.distanceResult.convertDistanceToString + "mi")
                             .background(
-                                RoundedRectangle(cornerRadius: 15.0)
+                                RoundedRectangle(cornerRadius: 5.0)
                                     .fill(.white)
                                     .stroke(.black, lineWidth: 1)
                                     .padding(.horizontal, -5)
@@ -256,6 +261,11 @@ struct ContentView: View {
         }
         .onTapGesture {
             isFocused = false
+        }
+        .alert(viewModel.alertTitle, isPresented: $viewModel.showInvalidInputAlert) {
+            Button("Ok", role: .cancel) { }
+        } message: {
+            Text(viewModel.alertMessage)
         }
         
     }

@@ -34,7 +34,9 @@ class ViewModel {
     var destinationsLon = 0.0
     var distanceResult = 0.0
     var readyToCalculateDistance = false
-    
+    var showInvalidInputAlert = false
+    var alertTitle = ""
+    var alertMessage = ""
     
     let unitedStatesRegion = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 105.7129, longitude: -95), // Example: San Francisco
@@ -173,6 +175,9 @@ class ViewModel {
         placeID = ""
         distanceResult = 0.0
         readyToCalculateDistance = false
+        showInvalidInputAlert = false
+        alertTitle = ""
+        alertMessage = ""
     }
     
     func removeNoResultsFoundView() {
@@ -225,9 +230,7 @@ class ViewModel {
     func setAutocompletionText(item: CityAutocomplete) {
         
         /* When the user selects the autocompletion city, replace the search text with it
-         and call the other async methods
-         */
-        
+         and call the other async methods */
         
         self.autocompletionSearchText = "\(item.city ?? "N/A"), \(item.state), \(item.country)"
         searchText = autocompletionSearchText
@@ -254,6 +257,10 @@ class ViewModel {
     
     func haversineDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double) -> Double {
         
+        /* Calculates the distance between the user's current location
+           and the destination that they have entered through the use
+           of the haversine formula. */
+        
         print(lat1, lon1, lat2, lon2)
         // Convert degrees to radians
         let dLat = (lat2 - lat1).degreesToRadians
@@ -270,5 +277,28 @@ class ViewModel {
         
         // Earth radius in miles
         return 3958.8 * c
+    }
+    
+    func checkSearchText(searchText: String) {
+        
+        /* Whenever the user hits enter/submits, this method will run to see
+           if the user has entered either special characters or numbers. If so,
+           then show an alert, otherwise, continue as normal. */
+        
+        let specialCharactersSet = CharacterSet(charactersIn: "!@#$%^&*(){}|:\"<>?[]\\;'./")
+        let numbersSet = CharacterSet(charactersIn: "1234567890")
+        
+        if searchText.rangeOfCharacter(from: specialCharactersSet) != nil {
+            showInvalidInputAlert = true
+            alertTitle = "Invalid Search"
+            alertMessage = "Your destination has special characters in it. Special characters are not allowed."
+        } else if searchText.rangeOfCharacter(from: numbersSet) != nil {
+            showInvalidInputAlert = true
+            alertTitle = "Invalid Search"
+            alertMessage = "Your destination has numbers in it. Numbers are not allowed."
+        } else {
+            showInvalidInputAlert = false
+        }
+        
     }
 }
