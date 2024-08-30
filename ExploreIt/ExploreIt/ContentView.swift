@@ -60,13 +60,17 @@ struct ContentView: View {
                             viewModel.currentAttraction = feature
                             showAttactionSheet.toggle()
                         }
-                        .sheet(item: $viewModel.currentAttraction) { attraction in
-                            ShowAttractionDetailsView(attraction: attraction)
-                                .presentationDetents([.height(450)])
-                                .presentationCornerRadius(25.0)
-                        }
                 }
             }
+        }
+        
+        // Moved sheet outside of loop to prevent automatic sheet closure
+        .sheet(item: $viewModel.currentAttraction) { attraction in
+            ShowAttractionDetailsView(attraction: attraction)
+                .presentationBackground(.regularMaterial)
+                .presentationDetents([.height(450)])
+                .presentationCornerRadius(25.0)
+                .presentationDragIndicator(.visible)
         }
         .mapControls {
             MapPitchToggle()
@@ -82,8 +86,8 @@ struct ContentView: View {
                     .tint(.black)
                     .background (
                         RoundedRectangle(cornerRadius: 15.0)
-                            .fill(.white)
-                            .frame(width: 285, height: 40)
+                            .foregroundStyle(.regularMaterial)
+                            .frame(width: 282.5, height: 40)
                     )
                     .onSubmit {
                         
@@ -194,10 +198,11 @@ struct ContentView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 85)
                             .background(
-                                Color.white
+                                RoundedRectangle(cornerRadius: 10.0)
+                                    .fill(.regularMaterial)
                                     .frame(width: 270)
-                                    .shadow(radius: 10)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10.0))
+                                    .shadow(radius: 5)
+//                                    .clipShape(RoundedRectangle(cornerRadius: 10.0))
                             )
                             .padding(.vertical, -3)
                         }
@@ -213,8 +218,8 @@ struct ContentView: View {
                         Text(viewModel.distanceResult.convertDistanceToString + "mi")
                             .background(
                                 RoundedRectangle(cornerRadius: 5.0)
-                                    .fill(.white)
-                                    .stroke(.black, lineWidth: 1)
+                                    .fill(.regularMaterial)
+                                    .stroke(.black.opacity(0.80), lineWidth: 1)
                                     .padding(.horizontal, -5)
                                     .padding(.vertical, -5)
                             )
