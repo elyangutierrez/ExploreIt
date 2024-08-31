@@ -25,6 +25,9 @@
 		721A3A822C756466002A1B8D /* CityAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A812C756466002A1B8D /* CityAutocomplete.swift */; };
 		721A3A862C770A42002A1B8D /* CapsuleForDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A852C770A42002A1B8D /* CapsuleForDetailView.swift */; };
 		721A3A8A2C7BD5DB002A1B8D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A892C7BD5DB002A1B8D /* LocationManager.swift */; };
+		728FFD7E2C82A278007BBDC0 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728FFD7D2C82A278007BBDC0 /* SplashScreenView.swift */; };
+		728FFD802C82A284007BBDC0 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728FFD7F2C82A284007BBDC0 /* ContainerView.swift */; };
+		728FFD822C82A88A007BBDC0 /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728FFD812C82A88A007BBDC0 /* CustomProgressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +61,9 @@
 		721A3A812C756466002A1B8D /* CityAutocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityAutocomplete.swift; sourceTree = "<group>"; };
 		721A3A852C770A42002A1B8D /* CapsuleForDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapsuleForDetailView.swift; sourceTree = "<group>"; };
 		721A3A892C7BD5DB002A1B8D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		728FFD7D2C82A278007BBDC0 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		728FFD7F2C82A284007BBDC0 /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
+		728FFD812C82A88A007BBDC0 /* CustomProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,11 +131,11 @@
 			isa = PBXGroup;
 			children = (
 				7212AA1E2C703FEC00C45166 /* ExploreItApp.swift */,
-				7212AA202C703FEC00C45166 /* ContentView.swift */,
+				728FFD7F2C82A284007BBDC0 /* ContainerView.swift */,
 				7204D6482C7C0E9E00C46AF7 /* ViewModel */,
 				7204D6412C7BFD0E00C46AF7 /* Extensions */,
 				721A3A7D2C752D34002A1B8D /* Model */,
-				721A3A7E2C752D51002A1B8D /* Views */,
+				728FFD772C82A14C007BBDC0 /* Core */,
 				7212AA222C703FEE00C45166 /* Assets.xcassets */,
 				7212AA242C703FEE00C45166 /* Preview Content */,
 			);
@@ -156,14 +162,57 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		721A3A7E2C752D51002A1B8D /* Views */ = {
+		728FFD772C82A14C007BBDC0 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				728FFD7B2C82A1D5007BBDC0 /* Launch */,
+				728FFD7A2C82A19F007BBDC0 /* Map */,
+				728FFD792C82A172007BBDC0 /* AttractionDetails */,
+				728FFD782C82A159007BBDC0 /* LoadingResults */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		728FFD782C82A159007BBDC0 /* LoadingResults */ = {
 			isa = PBXGroup;
 			children = (
 				721A3A752C72ABD8002A1B8D /* LoadingResultsIndicatorView.swift */,
 				721A3A772C72B587002A1B8D /* NoResultsFoundView.swift */,
-				721A3A792C731F25002A1B8D /* ShowMapIconView.swift */,
+			);
+			path = LoadingResults;
+			sourceTree = "<group>";
+		};
+		728FFD792C82A172007BBDC0 /* AttractionDetails */ = {
+			isa = PBXGroup;
+			children = (
 				721A3A7B2C740CE2002A1B8D /* ShowAttractionDetailsView.swift */,
 				721A3A852C770A42002A1B8D /* CapsuleForDetailView.swift */,
+			);
+			path = AttractionDetails;
+			sourceTree = "<group>";
+		};
+		728FFD7A2C82A19F007BBDC0 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				721A3A792C731F25002A1B8D /* ShowMapIconView.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		728FFD7B2C82A1D5007BBDC0 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				728FFD7C2C82A1DC007BBDC0 /* Views */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
+		728FFD7C2C82A1DC007BBDC0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				728FFD7D2C82A278007BBDC0 /* SplashScreenView.swift */,
+				7212AA202C703FEC00C45166 /* ContentView.swift */,
+				728FFD812C82A88A007BBDC0 /* CustomProgressView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -237,7 +286,6 @@
 			);
 			mainGroup = 7212AA122C703FEC00C45166;
 			packageReferences = (
-				721A3A8B2C7BF6B1002A1B8D /* XCRemoteSwiftPackageReference "HaversineDistance" */,
 			);
 			productRefGroup = 7212AA1C2C703FEC00C45166 /* Products */;
 			projectDirPath = "";
@@ -284,15 +332,18 @@
 			files = (
 				721A3A862C770A42002A1B8D /* CapsuleForDetailView.swift in Sources */,
 				7212AA402C717B4200C45166 /* GeocodingResponse.swift in Sources */,
+				728FFD7E2C82A278007BBDC0 /* SplashScreenView.swift in Sources */,
 				7212AA422C71802D00C45166 /* FeatureCollection.swift in Sources */,
 				721A3A782C72B587002A1B8D /* NoResultsFoundView.swift in Sources */,
 				721A3A7A2C731F25002A1B8D /* ShowMapIconView.swift in Sources */,
 				721A3A762C72ABD8002A1B8D /* LoadingResultsIndicatorView.swift in Sources */,
+				728FFD822C82A88A007BBDC0 /* CustomProgressView.swift in Sources */,
 				7204D6432C7BFD2200C46AF7 /* Double.swift in Sources */,
 				7212AA212C703FEC00C45166 /* ContentView.swift in Sources */,
 				7212AA1F2C703FEC00C45166 /* ExploreItApp.swift in Sources */,
 				721A3A822C756466002A1B8D /* CityAutocomplete.swift in Sources */,
 				721A3A802C75303A002A1B8D /* ContentView-ViewModel.swift in Sources */,
+				728FFD802C82A284007BBDC0 /* ContainerView.swift in Sources */,
 				7212AA2D2C704B3100C45166 /* Landmark.swift in Sources */,
 				721A3A7C2C740CE2002A1B8D /* ShowAttractionDetailsView.swift in Sources */,
 				721A3A8A2C7BD5DB002A1B8D /* LocationManager.swift in Sources */,
@@ -318,6 +369,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 52Q4M7N2WD;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ExploreItTests/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.Gutierrez.Elyan.ExploreItTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -336,6 +389,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 52Q4M7N2WD;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ExploreItTests/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.Gutierrez.Elyan.ExploreItTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -556,17 +611,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		721A3A8B2C7BF6B1002A1B8D /* XCRemoteSwiftPackageReference "HaversineDistance" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/tmn/HaversineDistance";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 7212AA132C703FEC00C45166 /* Project object */;
 }
