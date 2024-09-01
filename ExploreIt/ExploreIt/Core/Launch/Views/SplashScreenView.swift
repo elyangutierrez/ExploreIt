@@ -23,26 +23,26 @@ struct SplashScreenView: View {
             Color.white
                 .ignoresSafeArea()
             
-//            ZStack {
-//                Image(.appLogo)
-//                    .resizable()
-//                    .frame(width: 120, height: 120)
-//                    .clipShape(RoundedRectangle(cornerRadius: 15.0))
-//                    .shadow(radius: 5)
-//                    .overlay {
-//                        RoundedRectangle(cornerRadius: 15.0)
-//                            .fill(.clear)
-//                            .stroke(.black.opacity(0.05), lineWidth: 1)
-//                            .frame(width: 120, height: 120)
-//                    }
-//            }
-//            .scaleEffect(scale)
             ZStack {
-                Text("ExploreIt")
-                    .font(.largeTitle.bold())
-                    .foregroundStyle(.black)
+                Image(.appLogo)
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .clipShape(RoundedRectangle(cornerRadius: 15.0))
+                    .shadow(radius: 15)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 15.0)
+                            .fill(.clear)
+                            .stroke(.black.opacity(0.05), lineWidth: 1)
+                            .frame(width: 100, height: 100)
+                    }
             }
             .scaleEffect(scale)
+//            ZStack {
+//                Text("ExploreIt")
+//                    .font(.largeTitle.bold())
+//                    .foregroundStyle(.black)
+//            }
+//            .scaleEffect(scale)
         }
 //        .onAppear {
 //            
@@ -68,7 +68,7 @@ struct SplashScreenView: View {
                 scale = CGSize(width: 1.1, height: 1.1)
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.1, execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.2, execute: {
                 withAnimation(.smooth(duration: 0.7)) {
                     isPresented.toggle()
                 }
