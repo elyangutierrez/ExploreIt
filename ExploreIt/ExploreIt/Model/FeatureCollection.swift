@@ -95,11 +95,11 @@ struct Properties: Codable, Hashable  {
         case ColorAssociatedWithMarker.accommodation.rawValue,
             ColorAssociatedWithMarker.rental.rawValue,
             ColorAssociatedWithMarker.hotel.rawValue:
-            return ".red"
+            return ".neonRed"
             
         case ColorAssociatedWithMarker.catering.rawValue,
             ColorAssociatedWithMarker.food.rawValue:
-            return ".orange"
+            return ".neonOrange"
             
         case ColorAssociatedWithMarker.activity.rawValue,
             ColorAssociatedWithMarker.entertainment.rawValue,
@@ -107,13 +107,13 @@ struct Properties: Codable, Hashable  {
             ColorAssociatedWithMarker.leisure.rawValue,
             ColorAssociatedWithMarker.ski.rawValue,
             ColorAssociatedWithMarker.tourism.rawValue:
-            return ".yellow"
+            return ".neonYellow"
             
         case ColorAssociatedWithMarker.healthcare.rawValue,
             ColorAssociatedWithMarker.education.rawValue,
             ColorAssociatedWithMarker.childcare.rawValue,
             ColorAssociatedWithMarker.service.rawValue:
-            return ".green"
+            return ".neonGreen"
             
         case ColorAssociatedWithMarker.natural.rawValue,
             ColorAssociatedWithMarker.national_park.rawValue,
@@ -123,14 +123,14 @@ struct Properties: Codable, Hashable  {
             ColorAssociatedWithMarker.beach.rawValue,
             ColorAssociatedWithMarker.pet.rawValue,
             ColorAssociatedWithMarker.dogs.rawValue:
-            return ".teal"
+            return ".neonTeal"
             
         case ColorAssociatedWithMarker.commercial.rawValue,
             ColorAssociatedWithMarker.office.rawValue,
             ColorAssociatedWithMarker.production.rawValue,
             ColorAssociatedWithMarker.building.rawValue,
             ColorAssociatedWithMarker.power.rawValue:
-            return ".cyan"
+            return ".neonCyan"
             
         case ColorAssociatedWithMarker.public_transport.rawValue,
             ColorAssociatedWithMarker.railway.rawValue,
@@ -138,12 +138,12 @@ struct Properties: Codable, Hashable  {
             ColorAssociatedWithMarker.highway.rawValue,
             ColorAssociatedWithMarker.parking.rawValue,
             ColorAssociatedWithMarker.man_made.rawValue:
-            return ".blue"
+            return ".neonBlue"
             
         case ColorAssociatedWithMarker.religion.rawValue,
             ColorAssociatedWithMarker.administrative.rawValue,
             ColorAssociatedWithMarker.political.rawValue:
-            return ".indigo"
+            return ".neonIndigo"
             
         case ColorAssociatedWithMarker.internet_access.rawValue,
             ColorAssociatedWithMarker.wheelchair.rawValue,
@@ -156,10 +156,10 @@ struct Properties: Codable, Hashable  {
             ColorAssociatedWithMarker.low_emission_zone.rawValue,
             ColorAssociatedWithMarker.populated_place.rawValue,
             ColorAssociatedWithMarker.postal_code.rawValue:
-            return ".purple"
+            return ".neonPurple"
             
         case ColorAssociatedWithMarker.adult.rawValue:
-            return ".brown"
+            return ".neonBrown"
         default:
             return ".white"
         }

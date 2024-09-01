@@ -26,7 +26,17 @@ struct ContentView: View {
         ".blue": .blue,
         ".indigo": .indigo,
         ".brown": .brown,
-        ".purple": .purple
+        ".purple": .purple,
+        ".neonRed": .neonRed,
+        ".neonOrange": .neonOrange,
+        ".neonYellow": .neonYellow,
+        ".neonGreen": .neonGreen,
+        ".neonTeal": .neonTeal,
+        ".neonCyan": .neonCyan,
+        ".neonBlue": .neonBlue,
+        ".neonIndigo": .neonIndigo,
+        ".neonPurple": .neonPurple,
+        ".neonBrown": .neonBrown
     ]
     
     var body: some View {

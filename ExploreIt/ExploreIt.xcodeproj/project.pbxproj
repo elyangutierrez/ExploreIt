@@ -27,7 +27,6 @@
 		721A3A8A2C7BD5DB002A1B8D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721A3A892C7BD5DB002A1B8D /* LocationManager.swift */; };
 		728FFD7E2C82A278007BBDC0 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728FFD7D2C82A278007BBDC0 /* SplashScreenView.swift */; };
 		728FFD802C82A284007BBDC0 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728FFD7F2C82A284007BBDC0 /* ContainerView.swift */; };
-		728FFD822C82A88A007BBDC0 /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728FFD812C82A88A007BBDC0 /* CustomProgressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,7 +62,6 @@
 		721A3A892C7BD5DB002A1B8D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		728FFD7D2C82A278007BBDC0 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		728FFD7F2C82A284007BBDC0 /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
-		728FFD812C82A88A007BBDC0 /* CustomProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,7 +210,6 @@
 			children = (
 				728FFD7D2C82A278007BBDC0 /* SplashScreenView.swift */,
 				7212AA202C703FEC00C45166 /* ContentView.swift */,
-				728FFD812C82A88A007BBDC0 /* CustomProgressView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -337,7 +334,6 @@
 				721A3A782C72B587002A1B8D /* NoResultsFoundView.swift in Sources */,
 				721A3A7A2C731F25002A1B8D /* ShowMapIconView.swift in Sources */,
 				721A3A762C72ABD8002A1B8D /* LoadingResultsIndicatorView.swift in Sources */,
-				728FFD822C82A88A007BBDC0 /* CustomProgressView.swift in Sources */,
 				7204D6432C7BFD2200C46AF7 /* Double.swift in Sources */,
 				7212AA212C703FEC00C45166 /* ContentView.swift in Sources */,
 				7212AA1F2C703FEC00C45166 /* ExploreItApp.swift in Sources */,
@@ -531,6 +527,7 @@
 				DEVELOPMENT_TEAM = 52Q4M7N2WD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ExploreIt/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allows the app to use the users location to set default region";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -561,6 +558,7 @@
 				DEVELOPMENT_TEAM = 52Q4M7N2WD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ExploreIt/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Allows the app to use the users location to set default region";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
