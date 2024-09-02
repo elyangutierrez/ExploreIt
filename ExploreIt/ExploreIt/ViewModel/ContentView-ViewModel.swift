@@ -119,12 +119,12 @@ class ViewModel {
         do {
             let (data, _) = try await URLSession.shared.data(from: placesURL)
             
-            print(data)
+//            print(data)
             
-            if let jsonString = String(data: data, encoding: .utf8) {
-                print("Raw JSON data: \(jsonString)")
-            }
-            
+//            if let jsonString = String(data: data, encoding: .utf8) {
+//                print("Raw JSON data: \(jsonString)")
+//            }
+//            
             let decoder = JSONDecoder()
             
             if let response = try? decoder.decode(FeatureCollection.self, from: data) {
@@ -153,9 +153,12 @@ class ViewModel {
          set the position to where they are currently at, else set in US Region.
          */
         
+        let setRegionQueue = DispatchQueue(label: "setRegionQueue")
         
-        if CLLocationManager.locationServicesEnabled() {
-            mapCameraPosition = .userLocation(fallback: .region(unitedStatesRegion))
+        setRegionQueue.async {
+            if CLLocationManager.locationServicesEnabled() {
+                self.mapCameraPosition = .userLocation(fallback: .region(self.unitedStatesRegion))
+            }
         }
     }
     

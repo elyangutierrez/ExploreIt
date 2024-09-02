@@ -39,6 +39,12 @@ struct ContentView: View {
         ".neonBrown": .neonBrown
     ]
     
+    var getFallbackRegion: MKCoordinateRegion {
+        let fallbackRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: viewModel.locationManager.location?.latitude ?? 0.0, longitude: viewModel.locationManager.location?.longitude ?? 0.0), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
+        
+        return fallbackRegion
+    }
+    
     var body: some View {
         Map(position: $viewModel.mapCameraPosition) {
             ForEach(viewModel.featureCollection, id: \.self) { feature in
@@ -108,7 +114,7 @@ struct ContentView: View {
                         Task {
                             
                             /* API key is for owners use only. Plesae create your own
-                               if you want to expand further using geoapify.com */
+                             if you want to expand further using geoapify.com */
                             
                             /* When the user hits enter, call the autocompletion func, display results,
                              and when they select the correct city, perform regulars operations.
@@ -244,34 +250,26 @@ struct ContentView: View {
         .previewInterfaceOrientation(.portrait)
         .preferredColorScheme(.light)
         .onAppear {
-            viewModel.locationManager.requestPermissionToGetUserLocation()
             viewModel.locationManager.checkIfLocationServicesAreInUse()
             
-            if viewModel.locationManager.locationServicesInUse == true {
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
                 if let coordinate = viewModel.locationManager.location {
                     print("Latitude is: \(coordinate.latitude)")
                     print("Longitude is: \(coordinate.longitude)")
-                    
                 } else {
                     print("No location.")
                 }
-                
-                DispatchQueue.global().async { // sets the inital user region off of the main thread
-                    viewModel.setInitialUserRegion()
-                }
-                
-            } else {
-                print("No")
+            }
+            
+            DispatchQueue.global().async { // sets the inital user region off of the main thread
+                viewModel.setInitialUserRegion()
             }
         }
         .onChange(of: viewModel.searchText) {
-            
             if viewModel.searchText == "" {
-                viewModel.mapCameraPosition = .userLocation(fallback: .region(viewModel.unitedStatesRegion))
+                viewModel.mapCameraPosition = .userLocation(fallback: .region(getFallbackRegion))
                 viewModel.landmarks = [Landmark]()
-                
-            } else {
-                viewModel.mapCameraPosition = .automatic
+                print("Clearing search")
             }
         }
         .onTapGesture {

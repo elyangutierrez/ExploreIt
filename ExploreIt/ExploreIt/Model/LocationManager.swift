@@ -13,7 +13,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     let manager = CLLocationManager() // manager that manages location services
     
     var location: CLLocationCoordinate2D? // the current user's location
-    var locationServicesInUse = false
     
     override init() {
         super.init()
@@ -37,15 +36,20 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         locationServicesSwitch.async { [self] in
             if CLLocationManager.locationServicesEnabled() {
                 switch manager.authorizationStatus {
-                case .notDetermined, .restricted, .denied:
-                    locationServicesInUse = false // set to false if location services are not being used
-                    print("Location Services are not being used.")
-                case .authorizedAlways, .authorizedWhenInUse:
-                    locationServicesInUse = true // set to true if location services are being used
-                    print("Location Services are being used.")
+                case .notDetermined:
+                    manager.requestWhenInUseAuthorization()
+                case .restricted:
+                    print("Location restricted")
+                case .denied:
+                    print("Location denied")
+                case .authorizedAlways:
+                    print("Location authorizedAlways")
+                    location = manager.location?.coordinate
+                case .authorizedWhenInUse:
+                    print("Location authorized when in use.")
                     location = manager.location?.coordinate
                 @unknown default:
-                    fatalError() // call when a error or unknown situation occurs
+                    print("Location service disabled.")
                 }
             }
         }

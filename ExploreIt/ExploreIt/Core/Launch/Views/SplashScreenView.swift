@@ -15,6 +15,7 @@ struct SplashScreenView: View {
     @State private var progressWait = true
     @State private var textOpacity = 1.0
     @Binding var isPresented: Bool
+    var viewModel = ViewModel()
     
     var body: some View {
         ZStack {
