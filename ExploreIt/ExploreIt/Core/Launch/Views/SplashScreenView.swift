@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SplashScreenView: View {
-    
+    @Environment(\.colorScheme) var colorScheme
     @State private var scale = CGSize(width: 0.8, height: 0.8)
     @State private var barProgress = 0.0
     @State private var isVisible = false
@@ -17,11 +17,17 @@ struct SplashScreenView: View {
     @Binding var isPresented: Bool
     var viewModel = ViewModel()
     
+    var currentMode: Color {
+        if colorScheme == .dark {
+            return .black
+        } else {
+            return .white
+        }
+    }
+    
     var body: some View {
         ZStack {
-//            LinearGradient(colors: [.gradiantTestTwo, .gradiantTest], startPoint: .top, endPoint: .bottom)
-//                .ignoresSafeArea()
-            Color.white
+            currentMode
                 .ignoresSafeArea()
             
             ZStack {
@@ -29,7 +35,7 @@ struct SplashScreenView: View {
                     .resizable()
                     .frame(width: 100, height: 100)
                     .clipShape(RoundedRectangle(cornerRadius: 15.0))
-                    .shadow(radius: 15)
+                    .glow(isDarkModeOn: colorScheme, radius: 15)
                     .overlay {
                         RoundedRectangle(cornerRadius: 15.0)
                             .fill(.clear)
@@ -38,32 +44,7 @@ struct SplashScreenView: View {
                     }
             }
             .scaleEffect(scale)
-//            ZStack {
-//                Text("ExploreIt")
-//                    .font(.largeTitle.bold())
-//                    .foregroundStyle(.black)
-//            }
-//            .scaleEffect(scale)
         }
-//        .onAppear {
-//            
-//            withAnimation(.easeInOut(duration: 1.5)) {
-//                scale = CGSize(width: 1.0, height: 1.0)
-//            }
-//            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.1, execute: {
-//                withAnimation(.easeIn(duration: 0.35)) {
-//                    scale = CGSize(width: 50, height: 50)
-//                }
-//            })
-//            
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.4, execute: {
-//                withAnimation(.easeIn(duration: 0.2)) {
-//                    isPresented.toggle()
-//                }
-//            })
-//            
-//        }
         .onAppear {
             withAnimation(.easeInOut(duration: 1.5)) {
                 scale = CGSize(width: 1.1, height: 1.1)

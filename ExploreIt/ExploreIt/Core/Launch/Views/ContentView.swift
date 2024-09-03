@@ -9,12 +9,21 @@ import MapKit
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.colorScheme) var colorScheme
     @FocusState var isFocused: Bool
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 50, longitude: 50), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
     )
     @State private var showAttactionSheet = false
     @State private var viewModel = ViewModel()
+    
+    var currentMode: Color {
+        if colorScheme == .dark {
+            return .black
+        } else {
+            return .white
+        }
+    }
     
     let colorMap: [String: Color] = [
         ".red": .red,
@@ -51,26 +60,12 @@ struct ContentView: View {
                 Annotation(feature.properties.name ?? "N/A", coordinate: feature.geometry.getCoordinates, anchor: .top) {
                     Circle()
                         .fill(convertStringToColor(feature: feature))
+                        .iconShapeGlow(color: convertStringToColor(feature: feature), radius: 8)
                         .frame(width: 30, height: 30)
                         .overlay {
                             ShowMapIconView(catagory: feature.properties.getCatagory)
                                 .font(.system(size: 16))
                         }
-                        .background(
-                            Circle()
-                                .fill(convertStringToColor(feature: feature).opacity(0.60))
-                                .frame(width: 35, height: 35)
-                                .background(
-                                    Circle()
-                                        .fill(convertStringToColor(feature: feature).opacity(0.40))
-                                        .frame(width: 40, height: 40)
-                                        .background(
-                                            Circle()
-                                                .fill(convertStringToColor(feature: feature).opacity(0.20))
-                                                .frame(width: 45, height: 45)
-                                        )
-                                )
-                        )
                         .onTapGesture {
                             print("Touched Annotation!")
                             viewModel.currentAttraction = feature
@@ -99,7 +94,8 @@ struct ContentView: View {
                 
                 TextField("", text: $viewModel.searchText, prompt: Text("Enter Destination"))
                     .frame(width: 200, alignment: .center)
-                    .tint(.black)
+                    .foregroundStyle(colorScheme == .dark ? .white : .black)
+                    .tint(colorScheme == .dark ? .white : .black)
                     .background (
                         RoundedRectangle(cornerRadius: 15.0)
                             .foregroundStyle(.regularMaterial)
@@ -136,7 +132,7 @@ struct ContentView: View {
                         
                         Image(systemName: "magnifyingglass")
                             .frame(maxWidth: .infinity, alignment: .leading)
-                            .foregroundStyle(.black)
+                            .foregroundStyle(colorScheme == .dark ? Color.white.opacity(0.80) : Color.black)
                             .padding(.horizontal, 13)
                         
                         if !viewModel.searchText.isEmpty {
@@ -147,7 +143,7 @@ struct ContentView: View {
                                 .fontWeight(.bold)
                                 .background(
                                     Circle()
-                                        .fill(.gray.opacity(0.30))
+                                        .fill(colorScheme == .dark ? .white.opacity(0.80) : .gray.opacity(0.30))
                                         .frame(width: 20, height: 20)
                                     
                                 )
@@ -235,7 +231,7 @@ struct ContentView: View {
                             .background(
                                 RoundedRectangle(cornerRadius: 5.0)
                                     .fill(.regularMaterial)
-                                    .stroke(.black.opacity(0.80), lineWidth: 1)
+                                    .stroke(colorScheme == .dark ? .black.opacity(0.80) : .white, lineWidth: 1)
                                     .padding(.horizontal, -5)
                                     .padding(.vertical, -5)
                             )
@@ -248,7 +244,6 @@ struct ContentView: View {
             }
         }
         .previewInterfaceOrientation(.portrait)
-        .preferredColorScheme(.light)
         .onAppear {
             viewModel.locationManager.checkIfLocationServicesAreInUse()
             

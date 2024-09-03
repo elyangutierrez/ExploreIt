@@ -9,7 +9,16 @@ import SwiftUI
 
 struct ContainerView: View {
     
+    @Environment(\.colorScheme) var colorScheme
     @State private var isSplashScreenViewPresented = true
+    
+    var currentMode: Color {
+        if colorScheme == .dark {
+            return .black
+        } else {
+            return .white
+        }
+    }
     
     var body: some View {
         if !isSplashScreenViewPresented {

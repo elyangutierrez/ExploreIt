@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CapsuleForDetailView: View {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     let customPurple = Color(red: 0.2, green: 0.30, blue: 0.9)
     
     var categories: [String]
@@ -35,11 +37,12 @@ struct CapsuleForDetailView: View {
     }
     
     var body: some View {
+        
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(getMainCategories, id: \.self) { category in
                     Text(category.capitalized)
-                        .foregroundStyle(customPurple)
+                        .foregroundStyle(colorScheme == .dark ? .dark : .light)
                         .font(.subheadline)
                         .frame(height: 30)
                         .fontWeight(.bold)
