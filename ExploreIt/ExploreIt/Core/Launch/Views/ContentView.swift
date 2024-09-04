@@ -16,6 +16,7 @@ struct ContentView: View {
     )
     @State private var showAttactionSheet = false
     @State private var viewModel = ViewModel()
+    @State private var isDarkModeOn = false
     
     var currentMode: Color {
         if colorScheme == .dark {
@@ -128,6 +129,7 @@ struct ContentView: View {
                         RoundedRectangle(cornerRadius: 35.0)
                             .fill(.clear)
                             .stroke(isFocused ? .blue : .black, lineWidth: 2)
+                            .searchbarGlow(color: isFocused == true && currentMode == .black ? .blue : .clear, radius: 10)
                             .frame(width: 285, height: 40, alignment: .center)
                         
                         Image(systemName: "magnifyingglass")

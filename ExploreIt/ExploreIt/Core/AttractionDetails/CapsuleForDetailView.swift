@@ -51,6 +51,7 @@ struct CapsuleForDetailView: View {
                                 .fill(.cyan.opacity(0.15))
                                 .padding(.horizontal, -10)
                         )
+                        .shadow(color: colorScheme == .dark ? .dark : .light, radius: colorScheme == .dark ? 3 : 0)
                     
                     Spacer()
                         .frame(width: 30)

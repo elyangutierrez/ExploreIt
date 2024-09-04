@@ -16,8 +16,19 @@ extension View {
     
     func iconShapeGlow(color: Color, radius: CGFloat) -> some View {
         self
-            .shadow(color: color, radius: radius)
+            .shadow(color: color.opacity(0.60), radius: radius)
             .shadow(color: color, radius: radius / 2)
             .shadow(color: color, radius: radius / 3)
+    }
+    
+    func searchbarGlow(color: Color, radius: CGFloat) -> some View {
+        self
+            .shadow(color: color, radius: radius / 2)
+            .shadow(color: color, radius: radius / 2)
+    }
+    
+    func capsuleGlow(color: Color, radius: CGFloat) -> some View {
+        self
+            .shadow(color: color, radius: radius)
     }
 }

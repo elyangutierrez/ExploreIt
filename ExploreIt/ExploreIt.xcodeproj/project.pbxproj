@@ -131,10 +131,10 @@
 		7212AA1D2C703FEC00C45166 /* ExploreIt */ = {
 			isa = PBXGroup;
 			children = (
-				7212AA1E2C703FEC00C45166 /* ExploreItApp.swift */,
-				728FFD7F2C82A284007BBDC0 /* ContainerView.swift */,
-				7204D6482C7C0E9E00C46AF7 /* ViewModel */,
+				728B62C72C86A6A400A12046 /* App */,
+				728B62C82C86A6AA00A12046 /* Main */,
 				7204D6412C7BFD0E00C46AF7 /* Extensions */,
+				7204D6482C7C0E9E00C46AF7 /* ViewModel */,
 				721A3A7D2C752D34002A1B8D /* Model */,
 				728FFD772C82A14C007BBDC0 /* Core */,
 				7212AA222C703FEE00C45166 /* Assets.xcassets */,
@@ -161,6 +161,22 @@
 				721A3A892C7BD5DB002A1B8D /* LocationManager.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		728B62C72C86A6A400A12046 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				7212AA1E2C703FEC00C45166 /* ExploreItApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		728B62C82C86A6AA00A12046 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				728FFD7F2C82A284007BBDC0 /* ContainerView.swift */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 		728FFD772C82A14C007BBDC0 /* Core */ = {
